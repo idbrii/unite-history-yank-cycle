@@ -18,8 +18,11 @@ function! unite#history_yank#cycle#QuietlyInvokeUniteYank(history_direction)
         let s:cycle_backwards_count += 1
     endif
 
-    " undo our last paste
-    undo
+    if &modified
+        " undo our last paste if we did one. Not sure if there's a smarter way
+        " to detect paste.
+        undo
+    endif
 
     " Open unite, select an item, and confirm. Cannot use normal! because we
     " need to remap our movement keys within unite. We need to execute these
